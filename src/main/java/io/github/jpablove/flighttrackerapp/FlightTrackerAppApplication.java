@@ -7,7 +7,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class FlightTrackerAppApplication {
 
     public static void main(String[] args) {
+
         SpringApplication.run(FlightTrackerAppApplication.class, args);
+
+
     }
 
 }
