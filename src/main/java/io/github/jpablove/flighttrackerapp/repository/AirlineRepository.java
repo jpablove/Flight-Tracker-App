@@ -11,7 +11,7 @@ public class AirlineRepository {
         this.jdbc = jdbc;
     }
 
-    public int getOrCreate(String iata, String icao, String name) {
+    public Integer getOrCreate(String iata, String icao, String name) {
         return jdbc.sql("""
             INSERT INTO airline (iata, icao, name) VALUES (:iata, :icao, :name)
                  ON CONFLICT (iata) DO UPDATE SET icao = EXCLUDED.icao,\s
