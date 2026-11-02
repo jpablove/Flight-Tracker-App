@@ -10,7 +10,6 @@ public class FlightTrackerAppApplication {
 
         SpringApplication.run(FlightTrackerAppApplication.class, args);
 
-
     }
 
 }
