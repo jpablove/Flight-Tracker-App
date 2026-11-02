@@ -11,7 +11,7 @@ public class AirportRepository {
         this.jdbc = jdbc;
     }
 
-    public int getOrCreate(String iata, String icao, String name, String timezone) {
+    public Integer getOrCreate(String iata, String icao, String name, String timezone) {
         return jdbc.sql("INSERT INTO airport (iata, icao, name, timezone) VALUES (:iata, :icao, :name, :timezone) " +
                 "ON CONFLICT (iata) " +
                 "DO UPDATE SET  icao = EXCLUDED.icao, " +
