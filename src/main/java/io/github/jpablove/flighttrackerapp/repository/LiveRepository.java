@@ -13,23 +13,14 @@ public class LiveRepository {
         this.jdbc = jdbc;
     }
 
-    public Integer getOrCreate(long flightId, OffsetDateTime updated, Double latitude, Double longitude,
+    public void getOrCreate(long flightId, OffsetDateTime updated, Double latitude, Double longitude,
                                Double altitude, Double direction, Double speedHorizontal,
                                Double speedVertical, Boolean isGround) {
-        return jdbc.sql("""
+        jdbc.sql("""
                 INSERT INTO live (flight_id, updated, latitude, longitude, altitude, direction, speed_horizontal, speed_vertical, is_ground)
                 VALUES (:flight_id, :updated, :latitude, :longitude, :altitude, :direction, :speed_horizontal, :speed_vertical, :is_ground)
-                ON CONFLICT (flight_id)
-                DO UPDATE SET
-                    updated = EXCLUDED.updated,
-                    latitude = EXCLUDED.latitude,
-                    longitude = EXCLUDED.longitude,
-                    altitude = EXCLUDED.altitude,
-                    direction = EXCLUDED.direction,
-                    speed_horizontal = EXCLUDED.speed_horizontal,
-                    speed_vertical = EXCLUDED.speed_vertical,
-                    is_ground = EXCLUDED.is_ground
-                RETURNING flight_id
+                ON CONFLICT (flight_id, updated)
+                DO NOTHING
                 """)
                 .param("flight_id", flightId)
                 .param("updated", updated)
@@ -40,7 +31,6 @@ public class LiveRepository {
                 .param("speed_horizontal", speedHorizontal)
                 .param("speed_vertical", speedVertical)
                 .param("is_ground", isGround)
-                .query(Integer.class)
-                .single();
+                .update();
     }
 }

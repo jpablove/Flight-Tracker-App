@@ -15,8 +15,7 @@ public class AircraftTypeRepository {
         return jdbc.sql("""
             INSERT INTO aircraft_type (iata_code, icao_code)
             VALUES (:iata_code, :icao_code)
-            ON CONFLICT (iata_code) DO UPDATE SET
-                icao_code = EXCLUDED.icao_code
+            ON CONFLICT (iata_code, icao_code) DO UPDATE SET iata_code = EXCLUDED.iata_code
             RETURNING aircraft_type_id
             """)
                 .param("iata_code", iataCode)

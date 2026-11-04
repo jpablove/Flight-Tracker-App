@@ -16,6 +16,6 @@ public class FlightController {
 
     @PostMapping("/refresh")
     public void refresh() {
-        flightIngestionService.refreshFlights();
+        this.flightIngestionService.refreshFlights();
     }
 }
