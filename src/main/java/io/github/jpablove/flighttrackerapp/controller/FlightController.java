@@ -18,4 +18,9 @@ public class FlightController {
     public void refresh() {
         this.flightIngestionService.refreshFlights();
     }
+
+    @PostMapping("/get")
+    public void getFlights() {
+        this.flightIngestionService.getFlights();
+    }
 }

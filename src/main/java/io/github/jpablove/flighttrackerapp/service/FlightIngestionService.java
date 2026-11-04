@@ -39,4 +39,11 @@ public class FlightIngestionService {
         }
         logger.info("Refresh finished: {} saved, {} failed", saved, failed);
     }
+
+    public void getFlights() {
+        FlightResponse flightResponse = aviationStackClient.getFlights();
+        for (Flight f : flightResponse.getData()) {
+            logger.info(f.toString());
+        }
+    }
 }
