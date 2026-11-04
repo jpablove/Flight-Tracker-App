@@ -13,10 +13,11 @@ public class AircraftRepository {
 
     public Integer getOrCreate(String registration, String icao24, Integer aircraftTypeId) {
         return jdbc.sql("""
-                        INSERT INTO aircraft (registration, icao24, aircraft_type_id) VALUES (:registration, :icao24, :aircraft_type_id) 
-                                                ON CONFLICT (icao24) 
-                                                DO UPDATE SET registration = EXCLUDED.registration 
-                                                RETURNING aircraft_id"
+                        INSERT INTO aircraft (registration, icao24, aircraft_type_id) 
+                        VALUES (:registration, :icao24, :aircraft_type_id) 
+                        ON CONFLICT (icao24) 
+                        DO UPDATE SET registration = EXCLUDED.registration 
+                        RETURNING aircraft_id
                         """)
                 .param("registration", registration)
                 .param("icao24", icao24)
