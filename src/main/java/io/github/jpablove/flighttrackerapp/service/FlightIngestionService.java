@@ -3,9 +3,13 @@ package io.github.jpablove.flighttrackerapp.service;
 import io.github.jpablove.flighttrackerapp.api.client.AviationStackClient;
 import io.github.jpablove.flighttrackerapp.api.dto.Flight;
 import io.github.jpablove.flighttrackerapp.api.dto.FlightResponse;
+import io.github.jpablove.flighttrackerapp.model.FlightSummary;
+import io.github.jpablove.flighttrackerapp.repository.FlightQueryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class FlightIngestionService {
@@ -13,10 +17,12 @@ public class FlightIngestionService {
 
     private final AviationStackClient aviationStackClient;
     private final FlightPersister flightPersister;
+    private final FlightQueryRepository flightQueryRepository;
 
-    public FlightIngestionService(AviationStackClient aviationStackClient, FlightPersister flightPersister) {
+    public FlightIngestionService(AviationStackClient aviationStackClient, FlightPersister flightPersister, FlightQueryRepository flightQueryRepository) {
         this.aviationStackClient = aviationStackClient;
         this.flightPersister = flightPersister;
+        this.flightQueryRepository = flightQueryRepository;
     }
 
     public void refreshFlights() {
@@ -41,8 +47,8 @@ public class FlightIngestionService {
     }
 
     public void getFlights() {
-        FlightResponse flightResponse = aviationStackClient.getFlights();
-        for (Flight f : flightResponse.getData()) {
+        List<FlightSummary> list = this.flightQueryRepository.getFlights();
+        for (FlightSummary f : list) {
             logger.info(f.toString());
         }
     }
