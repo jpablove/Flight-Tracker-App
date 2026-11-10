@@ -1,11 +1,9 @@
 package io.github.jpablove.flighttrackerapp.controller;
 
-import io.github.jpablove.flighttrackerapp.repository.FlightQueryRepository;
 import io.github.jpablove.flighttrackerapp.service.FlightIngestionService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/flights")
@@ -24,5 +22,10 @@ public class FlightController {
     @GetMapping(value = "/get")
     public void getFlights() {
         this.flightIngestionService.getFlights();
+    }
+
+    @GetMapping(value = "/get/{flight_date}")
+    public void getFlightsByDate(@PathVariable("flight_date") LocalDate flightDate) {
+        this.flightIngestionService.getFlightsByDate(flightDate);
     }
 }

@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -48,8 +49,21 @@ public class FlightIngestionService {
 
     public void getFlights() {
         List<FlightSummary> list = this.flightQueryRepository.getFlights();
+        int i = 0;
         for (FlightSummary f : list) {
             logger.info(f.toString());
+            i++;
         }
+        logger.info(String.valueOf(i));
+    }
+
+    public void getFlightsByDate(LocalDate flightDate) {
+        List<FlightSummary> list = this.flightQueryRepository.getFlightsByDate(flightDate);
+        int i = 0;
+        for (FlightSummary f : list) {
+            logger.info(f.toString());
+            i++;
+        }
+        logger.info(String.valueOf(i));
     }
 }
