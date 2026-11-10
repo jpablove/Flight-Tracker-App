@@ -66,4 +66,5 @@ public class FlightIngestionService {
         }
         logger.info(String.valueOf(i));
     }
+
 }
